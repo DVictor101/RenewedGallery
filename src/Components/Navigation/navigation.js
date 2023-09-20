@@ -11,7 +11,7 @@ const Navigation = () => {
   <div className="nav">
    <div className="title_div"><h1>RENEWEDGALLERY</h1></div>
    {!user ? (
-    <div>
+    <div className="btn_cont">
      <Link className="btnlink" to={`/signin`}>
       <button className="custom-button">
        SIGN IN
