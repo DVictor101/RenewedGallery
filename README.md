@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# Image Gallery Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+The Image Gallery Application is a web-based platform that allows users to browse, search, and organize a collection of images. Users can sign in to access additional features such as searching for images by tags and rearranging the order of images. The application is built using React and utilizes the `react-beautiful-dnd` library for drag-and-drop functionality.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Browse a collection of images with tags.
+- Search for images by entering keywords in the search bar.
+- Rearrange the order of images using drag-and-drop functionality.
+- Firebase is used for User authentication for enhanced functionality.
+- Hover effect on images to prompt users to log in for more features.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Screenshots
 
-### `npm test`
+![Screenshot 1](./src//Assets//homepage-1.png)
+_Caption for Screenshot 1_
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Screenshot 2](./src//Assets/homepage.png)
+_Caption for Screenshot 2_
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository to your local machine:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   git clone https://github.com/your-username/image-gallery.git
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Install the required dependencies:
+   npm install
 
-### `npm run eject`
+3.Start the development server:
+npm start
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Usage
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- When you first visit the application, you can browse the images without signing in. Hover over the images to see a prompt encouraging you to log in for more functionality.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- If you choose to sign in, you will gain access to advanced features:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+-Use the search bar to search for images by tags.
+-Rearrange the order of images by dragging and dropping them within the gallery.
 
-## Learn More
+## Technologies Used
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- React
+- React Beautiful DND
+- Firebase (for user authentication)
+- SCSS (for styling)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
 
-### Code Splitting
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Acknowledgments
 
-### Analyzing the Bundle Size
+Special thanks to the React Beautiful DND library for providing drag-and-drop functionality.
+Icons used in this project are from FontAwesome.
+The sample images and data are for demonstration purposes only and are not licensed for commercial use
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Author
+- RenewedCrown
