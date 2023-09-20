@@ -9,7 +9,7 @@ const Navigation = () => {
 
  return (
   <div className="nav">
-   <div>RENEWEDGALLERY</div>
+   <div className="title_div"><h1>RENEWEDGALLERY</h1></div>
    {!user ? (
     <div>
      <Link className="btnlink" to={`/signin`}>
