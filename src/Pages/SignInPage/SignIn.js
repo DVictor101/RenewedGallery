@@ -7,7 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import app from "../../Firebase";
 
-const auth = getAuth(app); // Initialize the auth instance
+const auth = getAuth(app);
 
 const SignIn = () => {
  const [email, setEmail] = useState("");
@@ -30,9 +30,12 @@ const SignIn = () => {
     );
     setError(null);
     navigate("/");
+
+    setEmail("");
+    setPassword("");
    } else {
     setError(
-     "Incorrect email or password. Please try again."
+     `Access not granted. Only use permitted login details.`
     );
    }
   } catch (error) {
@@ -40,6 +43,9 @@ const SignIn = () => {
    setError(
     "Authentication failed. Please enter the correct UserName and Password."
    );
+
+   setEmail("");
+   setPassword("");
   }
  };
 
@@ -74,7 +80,7 @@ const SignIn = () => {
       type="submit"
       className="custom-button modi-btn"
      >
-      Sign In
+      LOG In
      </button>
      {error && (
       <p className="error-text">{error}</p>

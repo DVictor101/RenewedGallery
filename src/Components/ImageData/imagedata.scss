@@ -3,6 +3,7 @@
  justify-content: center;
  align-items: center;
  flex-direction: column;
+ margin-bottom: 60px;
 }
 
 .imgdata {
@@ -11,6 +12,56 @@
  grid-template-columns: 1fr 1fr 1fr 1fr;
  grid-template-rows: auto;
  gap: 40px;
+}
+/* Spinner.css */
+.spinner {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ height: 100px; /* Adjust the height as needed */
+}
+
+.spinner-circle {
+ width: 60px;
+ height: 60px;
+ border: 4px solid #ceaaaa; /* Spinner border color */
+ border-top: 4px solid #fff; /* Spinner top border color */
+ border-radius: 50%;
+ animation: spin 1s linear infinite; /* Animation for continuous spinning */
+}
+
+@keyframes spin {
+ 0% {
+  transform: rotate(0deg);
+ }
+ 100% {
+  transform: rotate(360deg);
+ }
+}
+.drop-target {
+ background-color: #f0f0f0; // Change the color as desired
+ border: 2px dashed #ccc; // Add a dashed border
+}
+// SCSS for draggable items
+.draggable-item {
+ cursor: grab; // Change the cursor icon
+}
+
+.draggable-item.is-dragging {
+ cursor: grabbing; // Change the cursor icon when dragging
+}
+// SCSS for successful drop
+.drop-success {
+ animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+ 0% {
+  opacity: 1;
+ }
+ 100% {
+  opacity: 0;
+ }
 }
 
 //RESPONSIVENESS STYLING STARTS HERE

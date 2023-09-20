@@ -21,6 +21,10 @@ const ImageData = () => {
   useState([]);
  const [isSignedIn, setIsSignedIn] =
   useState(false);
+ const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+ const draggableStyle = {
+  transition: "transform 0.2s ease", // Add a smooth transition
+ };
 
  // Maintain an array to represent the order of images
  const [imageOrder, setImageOrder] = useState([]);
@@ -79,6 +83,9 @@ const ImageData = () => {
      setImageOrder(
       dataWithTags.map((item) => item.id)
      );
+
+     // Data has loaded, set isLoading to false
+     setIsLoading(false);
     } else {
      console.error(
       "No data or empty data array in the response."
@@ -90,6 +97,9 @@ const ImageData = () => {
      "Error fetching images:",
      error
     );
+
+    // Data loading failed, set isLoading to false
+    setIsLoading(false);
    });
 
   // ...
@@ -133,8 +143,14 @@ const ImageData = () => {
 
  return (
   <div className="data_cont">
-   {isSignedIn ? (
-    // Render drag-and-drop functionality only for signed-in users
+   {isLoading ? (
+    // Display a loading spinner while data is loading
+    <div className="loading-spinner">
+     <div className="spinner">
+      <div className="spinner-circle"></div>
+     </div>
+    </div>
+   ) : isSignedIn ? (
     <>
      <SearchImage
       setSearchQuery={setSearchQuery}
@@ -159,6 +175,10 @@ const ImageData = () => {
              ref={provided.innerRef}
              {...provided.draggableProps}
              {...provided.dragHandleProps}
+             style={{
+              ...draggableStyle,
+              ...provided.draggableProps.style,
+             }}
             >
              <ImageCard
               data={data}
