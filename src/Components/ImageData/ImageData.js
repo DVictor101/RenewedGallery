@@ -22,12 +22,6 @@ const ImageData = () => {
  const [isSignedIn, setIsSignedIn] =
   useState(false);
  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
- const draggableStyle = {
-  transition: "transform 0.2s ease", // Add a smooth transition
- };
-
- // Maintain an array to represent the order of images
- const [imageOrder, setImageOrder] = useState([]);
 
  useEffect(() => {
   const unsubscribe = auth.onAuthStateChanged(
@@ -61,28 +55,24 @@ const ImageData = () => {
         "a man kneeling down",
         "a wooden table",
         "a wooden door",
-        "a woman in a black and white",
-        "a green louis vuitton bag",
+        "a woman in black and white",
+        "a green Louis Vuitton bag",
         "Two autistic friends",
         "a fire hydrant",
-        "a yellow Plant close up",
+        "a yellow plant close-up",
         "a red truck",
         "a very tall building",
-        "a person with hat",
+        "a person with a hat",
         "a grassy hill",
         "a woman wearing a hat and glasses",
         "a snow-covered mountain",
-        "a close up of a plant",
+        "a close-up of a plant",
        ][index],
       })
      );
 
      setImages(dataWithTags);
      setFilteredImages(dataWithTags);
-     // Initialize the imageOrder array
-     setImageOrder(
-      dataWithTags.map((item) => item.id)
-     );
 
      // Data has loaded, set isLoading to false
      setIsLoading(false);
@@ -101,8 +91,6 @@ const ImageData = () => {
     // Data loading failed, set isLoading to false
     setIsLoading(false);
    });
-
-  // ...
 
   return () => {
    // Unsubscribe from Firebase Auth state changes when the component unmounts
@@ -123,24 +111,35 @@ const ImageData = () => {
  const onDragEnd = (result) => {
   if (!result.destination) return;
 
-  // Update the order of images in the imageOrder array
-  const updatedOrder = [...imageOrder];
-  updatedOrder.splice(result.source.index, 1);
-  updatedOrder.splice(
-   result.destination.index,
+  const sourceIndex = result.source.index;
+  const destinationIndex =
+   result.destination.index;
+
+  // Create a copy of the filteredImages array
+  const updatedImages = [...filteredImages];
+
+  // Remove the dragged item from its source position
+  const [draggedItem] = updatedImages.splice(
+   sourceIndex,
+   1
+  );
+
+  // Insert the dragged item at the destination position
+  updatedImages.splice(
+   destinationIndex,
    0,
-   result.draggableId
+   draggedItem
   );
 
   // Use the updated order to rearrange the filteredImages
-  const reorderedImages = updatedOrder.map((id) =>
-   images.find((image) => image.id === id)
-  );
-
-  setImageOrder(updatedOrder);
-  setFilteredImages(reorderedImages);
+  setFilteredImages(updatedImages);
  };
 
+ // Define the transition duration for the animations
+ const transitionDuration = "0.2s";
+
+ // Inside your component...
+ // Inside your component...
  return (
   <div className="data_cont">
    {isLoading ? (
@@ -176,9 +175,10 @@ const ImageData = () => {
              {...provided.draggableProps}
              {...provided.dragHandleProps}
              style={{
-              ...draggableStyle,
               ...provided.draggableProps.style,
+              transition: `transform ${transitionDuration}`,
              }}
+             className="img-card" // Added a class for styling
             >
              <ImageCard
               data={data}
@@ -196,12 +196,19 @@ const ImageData = () => {
     </>
    ) : (
     <div className="imgdata">
+     {/* Render images using the filteredImages state */}
      {filteredImages.map((data) => (
-      <ImageCard
+      <div
        key={data.id}
-       data={data}
-       tags={data.tags}
-      />
+       className="img-card img-cardtwo image-hover-effect"
+       onClick={() =>
+        alert(
+         "Log in to enjoy more functionality."
+        )
+       }
+      >
+       <ImageCard data={data} tags={data.tags} />
+      </div>
      ))}
     </div>
    )}
