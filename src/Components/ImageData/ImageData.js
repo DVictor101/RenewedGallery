@@ -94,6 +94,8 @@ const ImageData = () => {
   const destinationIndex =
    result.destination.index;
 
+  if (sourceIndex === destinationIndex) return; // Don't make changes if the item is dropped in the same position
+
   // Create a copy of the filteredImages array
   const updatedImages = [...filteredImages];
 
