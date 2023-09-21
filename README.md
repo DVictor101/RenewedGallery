@@ -38,12 +38,12 @@ npm start
 
 ## Usage
 
-- When you first visit the application, you can browse the images without signing in. Hover over the images to see a prompt encouraging you to log in for more functionality.
+- When you first visit the application, you can only browse the images without signing in. Hover over the images to see a prompt encouraging you to log in for more functionality.
 
-- If you choose to sign in, you will gain access to advanced features:
+- After Logging in the the required details( the details in the instruction given), you will gain access to advanced features such as:
 
--Use the search bar to search for images by tags.
--Rearrange the order of images by dragging and dropping them within the gallery.
+-Using the search bar to search for images by tags.
+-Rearranging the order of images by dragging and dropping them within the gallery.
 
 ## Technologies Used
 

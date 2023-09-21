@@ -29,7 +29,7 @@ const SignIn = () => {
      password
     );
     setError(null);
-    navigate("/");
+    navigate("/homepage");
 
     setEmail("");
     setPassword("");
@@ -41,7 +41,7 @@ const SignIn = () => {
   } catch (error) {
    console.error("Error signing in:", error);
    setError(
-    "Authentication failed. Please enter the correct UserName and Password."
+    "Error Signing in, check connection."
    );
 
    setEmail("");
