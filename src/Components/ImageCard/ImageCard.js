@@ -1,10 +1,6 @@
 import "./imagecard.scss";
 
-const ImageCard = ({ data, tags }) => {
- // Capitalize the first letter of alt_description
- const capitalizedAltDescription =
-  data.alt_description.charAt(0).toUpperCase() +
-  data.alt_description.slice(1);
+const ImageCard = ({ data }) => {
 
  return (
   <div className="imgcard">
@@ -12,11 +8,13 @@ const ImageCard = ({ data, tags }) => {
     <img
      className="img_ind"
      src={data.urls.regular}
-     alt={capitalizedAltDescription}
+     alt={`by +${data.user.first_name}`}
     />
    </div>
    <div className="title_cont">
-    <span className="img_title">{tags}</span>
+    <span className="img_title">
+     {data.user.first_name}
+    </span>
    </div>
   </div>
  );

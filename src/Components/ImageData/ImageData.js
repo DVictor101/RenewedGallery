@@ -46,28 +46,7 @@ const ImageData = () => {
      const dataWithTags = data.map(
       (item, index) => ({
        ...item,
-       tags: [
-        "Antelope",
-        "Sun",
-        "Orange flowers",
-        "Flower",
-        "Woman on Flower",
-        "Fish in sea",
-        "Sun setting",
-        "man laying",
-        "mountain side",
-        "Louis Vuitton",
-        "Mountain walk",
-        "sun rising",
-        "Balloons",
-        "walkway",
-        "Art",
-        "mountain space",
-        "City View",
-        "Sun setting",
-        "White Car",
-        "Boat Dock",
-       ][index],
+       tags: [index],
       })
      );
 
@@ -101,7 +80,7 @@ const ImageData = () => {
  useEffect(() => {
   // Filter images based on the searchQuery
   const filtered = images.filter((data) =>
-   data.tags
+   data.user.first_name
     .toLowerCase()
     .includes(searchQuery.toLowerCase())
   );
