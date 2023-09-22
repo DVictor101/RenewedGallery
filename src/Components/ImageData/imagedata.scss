@@ -5,7 +5,15 @@
  flex-direction: column;
  margin-bottom: 60px;
 }
+.img-card {
+ transition: transform 0.2s;
+ will-change: transform;
+}
 
+.img-card.isDragging {
+ transform: scale(1.1);
+ opacity: 0.8;
+}
 .imgdata {
  margin-top: 30px;
  display: grid;

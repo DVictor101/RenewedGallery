@@ -3,15 +3,48 @@ import React, {
  useState,
 } from "react";
 import {
- DragDropContext,
- Droppable,
- Draggable,
-} from "react-beautiful-dnd";
+ DndProvider,
+ useDrag,
+ useDrop,
+} from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import "./imagedata.scss";
 import ImageCard from "../ImageCard/ImageCard";
 import SearchImage from "../SearchImage/SearchImage";
 import { resultData } from "../../spashdata";
 import { auth } from "../../Firebase";
+
+const DraggableImageCard = ({
+ data,
+ index,
+ moveImage,
+}) => {
+ const [, ref] = useDrag({
+  type: "IMAGE",
+  item: { id: data.id, index },
+ });
+
+ const [, drop] = useDrop({
+  accept: "IMAGE",
+  hover: (draggedItem) => {
+   if (draggedItem.index !== index) {
+    moveImage(draggedItem.index, index);
+    draggedItem.index = index;
+   }
+  },
+ });
+
+ return (
+  <div
+   ref={(node) => ref(drop(node))}
+   className={`img-card ${
+    ref.isDragging ? "isDragging" : ""
+   }`}
+  >
+   <ImageCard data={data} tags={data.tags} />
+  </div>
+ );
+};
 
 const ImageData = () => {
  const [images, setImages] = useState([]);
@@ -21,28 +54,22 @@ const ImageData = () => {
   useState([]);
  const [isSignedIn, setIsSignedIn] =
   useState(false);
- const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+ const [isLoading, setIsLoading] = useState(true);
 
  useEffect(() => {
   const unsubscribe = auth.onAuthStateChanged(
    (user) => {
     if (user) {
-     // checking if User is signed in
      setIsSignedIn(true);
     } else {
-     // checking if User is signed out
      setIsSignedIn(false);
     }
    }
   );
 
-  // Fetch images when the component mounts
-  // ...
-
   resultData()
    .then((data) => {
     if (data && data.length > 0) {
-     // Add hardcoded tags to the data
      const dataWithTags = data.map(
       (item, index) => ({
        ...item,
@@ -52,13 +79,12 @@ const ImageData = () => {
 
      setImages(dataWithTags);
      setFilteredImages(dataWithTags);
-
-     // Data has loaded, set isLoading to false
      setIsLoading(false);
     } else {
      console.error(
       "No data or empty data array in the response."
      );
+     setIsLoading(false);
     }
    })
    .catch((error) => {
@@ -66,19 +92,15 @@ const ImageData = () => {
      "Error fetching images:",
      error
     );
-
-    // Data loading failed, set isLoading to false
     setIsLoading(false);
    });
 
   return () => {
-   // Unsubscribe from Firebase Auth state changes when the component unmounts
    unsubscribe();
   };
  }, []);
 
  useEffect(() => {
-  // Filter images based on the searchQuery
   const filtered = images.filter((data) =>
    data.user.first_name
     .toLowerCase()
@@ -87,44 +109,19 @@ const ImageData = () => {
   setFilteredImages(filtered);
  }, [searchQuery, images]);
 
- const onDragEnd = (result) => {
-  if (!result.destination) return;
-
-  const sourceIndex = result.source.index;
-  const destinationIndex =
-   result.destination.index;
-
-  if (sourceIndex === destinationIndex) return; // Don't make changes if the item is dropped in the same position
-
-  // Create a copy of the filteredImages array
+ const moveImage = (fromIndex, toIndex) => {
   const updatedImages = [...filteredImages];
-
-  // Remove the dragged item from its source position
-  const [draggedItem] = updatedImages.splice(
-   sourceIndex,
+  const [movedImage] = updatedImages.splice(
+   fromIndex,
    1
   );
-
-  // Insert the dragged item at the destination position
-  updatedImages.splice(
-   destinationIndex,
-   0,
-   draggedItem
-  );
-
-  // Use the updated order to rearrange the filteredImages
+  updatedImages.splice(toIndex, 0, movedImage);
   setFilteredImages(updatedImages);
  };
 
- // Define the transition duration for the animations
- const transitionDuration = "0.2s";
-
- // Inside your component...
- // Inside your component...
  return (
   <div className="data_cont">
    {isLoading ? (
-    // Display a loading spinner while data is loading
     <div className="loading-spinner">
      <div className="spinner">
       <div className="spinner-circle"></div>
@@ -134,50 +131,22 @@ const ImageData = () => {
     <>
      <SearchImage
       setSearchQuery={setSearchQuery}
-     />{" "}
-     {/* Render SearchImage here */}
-     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="images">
-       {(provided) => (
-        <div
-         className="imgdata"
-         {...provided.droppableProps}
-         ref={provided.innerRef}
-        >
-         {filteredImages.map((data, index) => (
-          <Draggable
-           key={data.id}
-           draggableId={data.id.toString()} // Convert to string
-           index={index}
-          >
-           {(provided) => (
-            <div
-             ref={provided.innerRef}
-             {...provided.draggableProps}
-             {...provided.dragHandleProps}
-             style={{
-              ...provided.draggableProps.style,
-              transition: `transform ${transitionDuration}`,
-             }}
-             className="img-card" // Added a class for styling
-            >
-             <ImageCard
-              data={data}
-              tags={data.tags}
-             />
-            </div>
-           )}
-          </Draggable>
-         ))}
-         {provided.placeholder}
-        </div>
-       )}
-      </Droppable>
-     </DragDropContext>
+     />
+     <DndProvider backend={HTML5Backend}>
+      <div className="imgdata">
+       {filteredImages.map((data, index) => (
+        <DraggableImageCard
+         key={data.id}
+         data={data}
+         index={index}
+         moveImage={moveImage}
+        />
+       ))}
+      </div>
+     </DndProvider>
     </>
    ) : (
     <div className="imgdata">
-     {/* Render images using the filteredImages state */}
      {filteredImages.map((data) => (
       <div
        key={data.id}
