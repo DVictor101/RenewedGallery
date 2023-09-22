@@ -13,6 +13,12 @@ import ImageCard from "../ImageCard/ImageCard";
 import SearchImage from "../SearchImage/SearchImage";
 import { resultData } from "../../spashdata";
 import { auth } from "../../Firebase";
+import { TouchBackend } from "react-dnd-touch-backend";
+
+import { isMobile } from "react-device-detect";
+const selectedBackend = isMobile
+ ? TouchBackend
+ : HTML5Backend;
 
 const DraggableImageCard = ({
  data,
@@ -132,7 +138,7 @@ const ImageData = () => {
      <SearchImage
       setSearchQuery={setSearchQuery}
      />
-     <DndProvider backend={HTML5Backend}>
+     <DndProvider backend={selectedBackend}>
       <div className="imgdata">
        {filteredImages.map((data, index) => (
         <DraggableImageCard
